@@ -10,6 +10,7 @@ CREATE TABLE online_bank.account (
     UNIQUE (sort_code, account_number)
 );
 
+CREATE SEQUENCE online_bank.account_sequence START WITH 3;
 CREATE SEQUENCE online_bank.transaction_sequence START WITH 5;
 CREATE TABLE online_bank.transaction (
     id bigint NOT NULL PRIMARY KEY,

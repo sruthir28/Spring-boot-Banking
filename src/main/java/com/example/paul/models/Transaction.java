@@ -1,13 +1,13 @@
 package com.example.paul.models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 // TODO Add support for Bank charges, currency conversion, setup repeat payment/ standing order
 @Entity
 @Table(name = "transaction", schema = "online_bank")
 
-@SequenceGenerator(name = "transaction_seq", sequenceName = "transaction_sequence", schema = "online_bank", initialValue = 5)
+@SequenceGenerator(name = "transaction_seq", sequenceName = "transaction_sequence", schema = "online_bank", initialValue = 5, allocationSize = 1)
 public class Transaction {
 
     @Id
