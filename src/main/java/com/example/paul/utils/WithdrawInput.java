@@ -1,6 +1,6 @@
 package com.example.paul.utils;
 
-import javax.validation.constraints.Positive;
+import jakarta.validation.constraints.Positive;
 import java.util.Objects;
 
 public class WithdrawInput extends AccountInput{
