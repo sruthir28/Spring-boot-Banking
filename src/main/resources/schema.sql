@@ -1,5 +1,6 @@
 CREATE SCHEMA online_bank;
 
+CREATE SEQUENCE online_bank.account_sequence START WITH 3;
 CREATE TABLE online_bank.account (
     id bigint NOT NULL PRIMARY KEY,
     sort_code CHAR(8) NOT NULL,

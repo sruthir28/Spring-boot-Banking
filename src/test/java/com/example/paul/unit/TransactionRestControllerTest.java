@@ -1,6 +1,7 @@
 package com.example.paul.unit;
 
 import com.example.paul.controllers.TransactionRestController;
+import com.example.paul.services.AccountService;
 import com.example.paul.services.TransactionService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,6 +20,9 @@ class TransactionRestControllerTest {
 
     @Autowired
     private MockMvc mvc;
+
+    @MockBean
+    private AccountService accountService;
 
     @MockBean
     private TransactionService transactionService;
