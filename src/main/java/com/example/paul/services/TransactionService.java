@@ -8,6 +8,7 @@ import com.example.paul.repositories.TransactionRepository;
 import com.example.paul.utils.TransactionInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -20,6 +21,7 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    @Transactional
     public boolean makeTransfer(TransactionInput transactionInput) {
         // TODO refactor synchronous implementation with messaging queue
         String sourceSortCode = transactionInput.getSourceAccount().getSortCode();
@@ -47,6 +49,7 @@ public class TransactionService {
                 transaction.setLongitude(transactionInput.getLongitude());
 
                 updateAccountBalance(sourceAccount.get(), transactionInput.getAmount(), ACTION.WITHDRAW);
+                updateAccountBalance(targetAccount.get(), transactionInput.getAmount(), ACTION.DEPOSIT);
                 transactionRepository.save(transaction);
 
                 return true;
@@ -55,7 +58,8 @@ public class TransactionService {
         return false;
     }
 
-     public void updateAccountBalance(Account account, double amount, ACTION action) {
+    @Transactional
+    public void updateAccountBalance(Account account, double amount, ACTION action) {
         if (action == ACTION.WITHDRAW) {
             account.setCurrentBalance((account.getCurrentBalance() - amount));
         } else if (action == ACTION.DEPOSIT) {
@@ -66,6 +70,6 @@ public class TransactionService {
 
     // TODO support overdrafts or credit account
     public boolean isAmountAvailable(double amount, double accountBalance) {
-        return (accountBalance - amount) > 0;
+        return (accountBalance - amount) >= 0;
     }
 }
